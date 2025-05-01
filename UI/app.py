@@ -7,7 +7,7 @@ st.title("🔍 Homicide Prediction Tool")
 st.write("This tool uses a trained model to predict the likelihood of homicide based on input data. Choose a model below.")
 
 # Model selection
-model_choice = st.selectbox("Select a Model", ["best_model_rf", "best_model_nn", "best_model_new_nn"])
+model_choice = st.selectbox("Select a Model", ["best_model_rf", "best_model_nn", "best_model_next"])
 
 # Sliders for key features
 physical_injury = st.slider("Physical Injury", 0.0, 1.0, 0.5)
@@ -46,8 +46,8 @@ elif model_choice == "best_model_nn":
         "quant_desobediencia_crb", "quant_desacato_crb", "quant_perturbacoes_da_tranquilidade_crb"
     ]
 
-elif model_choice == "best_model_new_nn":
-    model = load("../best_model_new_nn.sav")
+elif model_choice == "best_model_next":
+    model = load("../best_model_next.sav")
     model_features = [  # Same list as above,
         "mes_num_crb", "quant_lesao_corporal_crb", "quant_ameaca_crb", "quant_roubo_crb", 
         "quant_injuria_crb", "quant_furto_crb", "quant_lesao_no_transito_crb", 
@@ -77,6 +77,6 @@ if st.button("Predict Homicide Risk"):
     prediction = model.predict(input_data)
 
     if prediction[0] == 1:
-        st.warning("🚨 The model predicts a lower risk of homicide**.")
+        st.success("✅ The model predicts a higher risk of homicide. It means this area is more likely to experience homicide.")
     else:
-        st.success("✅ The model predicts a higher risk of homicide**.")
+        st.warning("🚨 The model predicts a lower risk of homicide. It means this area is less likely to experience homicide.")
